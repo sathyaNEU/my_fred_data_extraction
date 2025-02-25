@@ -44,4 +44,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           snow sql -q "ALTER GIT REPOSITORY GIT_REPO FETCH" --temporary-connection --account $SNOWFLAKE_ACCOUNT --user $SNOWFLAKE_USER --role $SNOWFLAKE_ROLE --warehouse $SNOWFLAKE_WAREHOUSE --database $SNOWFLAKE_DATABASE --schema $SNOWFLAKE_SCHEMA 
-          snow sql  -q "EXECUTE IMMEDIATE FROM @GIT_REPO/branches/main/scripts/data_env_setup.sql USING (env => 'DEV', AWS_ACCESS_KEY => $AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY => $AWS_SECRET_ACCESS_KEY)" --temporary-connection --account $SNOWFLAKE_ACCOUNT --user $SNOWFLAKE_USER --role $SNOWFLAKE_ROLE --warehouse $SNOWFLAKE_WAREHOUSE --database $SNOWFLAKE_DATABASE --schema $SNOWFLAKE_SCHEMA
+          snow sql  -f ./scripts/data_env_setup.sql -D "env=DEV" -D "AWS_ACCESS_KEY=$AWS_ACCESS_KEY" -D "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" --temporary-connection --account $SNOWFLAKE_ACCOUNT --user $SNOWFLAKE_USER --role $SNOWFLAKE_ROLE --warehouse $SNOWFLAKE_WAREHOUSE --database $SNOWFLAKE_DATABASE --schema $SNOWFLAKE_SCHEMA
