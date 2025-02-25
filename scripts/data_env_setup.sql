@@ -1,3 +1,11 @@
+--!jinja
+
+/*-----------------------------------------------------------------------------
+Script:       data_env_setup.sql
+Author:       SATHYA
+Last Updated: 6/11/2024
+-----------------------------------------------------------------------------*/
+
 -- Project Initialization for Production Environment Setup
 --
 -- This script establishes the foundational environment necessary for deploying the project
@@ -16,6 +24,8 @@
 --    2.8. Create Materialized Views in the ANALYTICS schema.
 --    2.9. Define and schedule Tasks for automation.
 -- 3. Load data upto current date
+
+
 SET AWS_CREDENTIALS = '{"AWS_ACCESS_KEY":"' || "{{AWS_ACCESS_KEY}}" || '", "AWS_SECRET_ACCESS_KEY":"' || "{{AWS_SECRET_ACCESS_KEY}}" || '"}';
 
 USE ROLE FRED_ROLE;
