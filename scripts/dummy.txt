@@ -1,1 +1,1 @@
-.dummy-trigger1
+.dummy-trigger2
