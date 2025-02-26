@@ -28,9 +28,7 @@ jobs:
 
       - name: Test Snow CLI
         run: snow --help
-
-      - name: Testing Github Actions
-        run: echo "So far, so good!"
+        
       - name: Deploy notebooks
         env:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
@@ -43,6 +41,6 @@ jobs:
           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          echo "EXECUTE IMMEDIATE FROM @MY_GIT_REPO/branches/main/scripts/data_env_setup.sql USING (env => 'DEV', AWS_ACCESS_KEY => \"$AWS_ACCESS_KEY\", AWS_SECRET_ACCESS_KEY => \"$AWS_SECRET_ACCESS_KEY\")"
+          echo 
           snow sql -q "ALTER GIT REPOSITORY MY_GIT_REPO FETCH" --temporary-connection --account $SNOWFLAKE_ACCOUNT --user $SNOWFLAKE_USER --role $SNOWFLAKE_ROLE --warehouse $SNOWFLAKE_WAREHOUSE --database $SNOWFLAKE_DATABASE --schema $SNOWFLAKE_SCHEMA 
-          snow sql -f ./scripts/data_env_setup.sql -D "env=DEV" -D "AWS_ACCESS_KEY=$AWS_ACCESS_KEY" -D "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" --temporary-connection --account $SNOWFLAKE_ACCOUNT --user $SNOWFLAKE_USER --role $SNOWFLAKE_ROLE --warehouse $SNOWFLAKE_WAREHOUSE --database $SNOWFLAKE_DATABASE --schema $SNOWFLAKE_SCHEMA
+          snow sql -q "EXECUTE IMMEDIATE FROM @MY_GIT_REPO/branches/main/scripts/data_env_setup.sql USING (env => \"DEV\", AWS_ACCESS_KEY => \"$AWS_ACCESS_KEY\", AWS_SECRET_ACCESS_KEY => \"$AWS_SECRET_ACCESS_KEY\")" --temporary-connection --account $SNOWFLAKE_ACCOUNT --user $SNOWFLAKE_USER --role $SNOWFLAKE_ROLE --warehouse $SNOWFLAKE_WAREHOUSE --database $SNOWFLAKE_DATABASE --schema $SNOWFLAKE_SCHEMA
